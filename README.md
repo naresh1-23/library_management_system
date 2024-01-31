@@ -14,24 +14,36 @@ Create a virtual environment and activate it:
 
 
 python3 -m venv env
+
+
 source env/bin/activate   # On Windows: venv\Scripts\activate
 
 Install dependencies:
+
+
 pip install -r requirement.txt
 
 
 Apply database migrations:
+
 python3 manage.py makemigrations
+
+
 python3 manage.py migrate
 
 
 Create a superuser for admin access:
+
+
 python3 manage.py createsuperuser
 Follow the prompts to create a superuser account.
 
 Run the development server:
 
+
 python3 manage.py runserver
+
+
 Access the admin interface at http://localhost:8000/admin/ and log in with the superuser credentials.
 
 API is accessible at http://localhost:8000/api/
