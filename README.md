@@ -7,7 +7,10 @@ Installation
 Clone the repository:
 
 run below command in terminal
+
 git clone https://github.com/your-username/library-management-system.git
+
+
 cd library-management-system
 
 Create a virtual environment and activate it:
