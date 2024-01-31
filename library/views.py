@@ -37,39 +37,7 @@ class BookView(APIView):
             return Response({"status": 200,"error":serializer.errors}, status = status.HTTP_400_BAD_REQUEST)
         return Response({"status": 400, "message": "access denied"}, status = status.HTTP_401_UNAUTHORIZED)
     
-#this api view is used to get single book detail and also update and delete the data. 
-class BookUpdateDeleteView(APIView):
-    def get(self, request, pk, format = None):
-        data = Book.objects.filter(id = pk).first()
-        if not data:
-            return Response({"status": 400,"message":"data doesn't exist"},status = status.HTTP_404_NOT_FOUND)
-        serialized_data = BookSerializer(data)
-        return Response({"status": 200,"data":serialized_data.data}, status = status.HTTP_200_OK)
 
-    #I have used PUT method to update the data. So, we have to provide all data of the book when updating
-    def put(self, request, pk, format=None):
-        #checked whether given user is admin or not. Since, only admin can add delete and update
-        if request.user.is_superuser:
-            book = Book.objects.filter(id = pk).first()
-            if not book:
-                return Response({"status": 400,"message":"data doesn't exist"},status = status.HTTP_404_NOT_FOUND)
-            serializer = BookSerializer(book, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response({"status": 200,"data":serializer.data}, status = status.HTTP_202_ACCEPTED)
-            return Response({"status": 400,"error":serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({"status": 400, "message": "access denied"}, status = status.HTTP_401_UNAUTHORIZED)
-    
-    def delete(self, request, pk, format = None):
-        #checked whether given user is admin or not. Since, only admin can add delete and update
-        if request.user.is_superuser:
-            book = Book.objects.filter(id = pk).first()
-            if not book:
-                return Response({"status": 400,"message":"data doesn't exist"},status = status.HTTP_404_NOT_FOUND)
-            book.delete()
-            return Response({"status": 200,"message":"data deleted successfully"},status = status.HTTP_200_OK)
-        return Response({"status": 400, "message": "access denied"}, status = status.HTTP_401_UNAUTHORIZED)
-    
 #This view is used to see the detail of the book. In this book have 1-1 relationship with the detail model
 class BookDetailView(APIView):    
     def get(self,request, format = None ):
@@ -94,16 +62,18 @@ class BookDetailView(APIView):
 #this is used to update, delete and get single book detail.
 class BookDetailUpdateDeleteView(APIView):
     def get(self, request, pk, format = None):
-        data = BookDetail.objects.filter(id = pk).first()
+        data = BookDetail.objects.filter(book_id = pk).first()
+        book = Book.objects.filter(id = pk).first()
         if not data:
             return Response({"status":400,"message":"data doesn't exist"},status = status.HTTP_404_NOT_FOUND)
         serialized_data = BookDetailSerializer(data)
-        return Response({"status": 200,"data":serialized_data.data}, status = status.HTTP_200_OK)
+        serialized_book = BookSerializer(book)
+        return Response({"status": 200,"book":serialized_book.data,"data":serialized_data.data}, status = status.HTTP_200_OK)
 
     def put(self, request, pk, format=None):
         #checked whether given user is admin or not. Since, only admin can add delete and update
         if request.user.is_superuser:   
-            book_detail = BookDetail.objects.filter(id = pk).first()
+            book_detail = BookDetail.objects.filter(book_id = pk).first()
             if not book_detail:
                 return Response({"status":400,"message":"data doesn't exist"},status = status.HTTP_404_NOT_FOUND)
             serializer = BookDetailSerializer(book_detail, data=request.data)
@@ -117,7 +87,7 @@ class BookDetailUpdateDeleteView(APIView):
     def delete(self, request, pk, format = None):
         #checked whether given user is admin or not. Since, only admin can add delete and update
         if request.user.is_superuser:    
-            book_detail = BookDetail.objects.filter(id = pk).first()
+            book_detail = BookDetail.objects.filter(book_id = pk).first()
             if not book_detail:
                 return Response({"status": 400,"message":"data doesn't exist"},status = status.HTTP_404_NOT_FOUND)
             book_detail.delete()
@@ -216,7 +186,7 @@ class BookBorrowLists(APIView):
 
 class BorrowUpdateDeleteView(APIView):
     def get(self, request, pk, format = None):
-        data = BookBorrowed.objects.filter(id = pk).first()
+        data = BookBorrowed.objects.filter(user_id = pk).first()
         if not data:
             return Response({"status":400,"message":"Data doesn't exist"},status = status.HTTP_404_NOT_FOUND)
         serialized_data = BookBorrowedSerializer(data)
@@ -225,7 +195,7 @@ class BorrowUpdateDeleteView(APIView):
     def put(self, request, pk, format=None):
         #checked whether given user is admin or not. Since, only admin can add delete and update
         if request.user.is_superuser:
-            borrower_detail = BookBorrowed.objects.filter(id = pk).first()
+            borrower_detail = BookBorrowed.objects.filter(user_id = pk).first()
             if not borrower_detail:
                 return Response({"status":400,"message":"Data doesn't exist"},status = status.HTTP_404_NOT_FOUND)
             serializer = BookBorrowedSerializer(borrower_detail, data=request.data)
@@ -239,7 +209,7 @@ class BorrowUpdateDeleteView(APIView):
     def delete(self, request, pk, format = None):
         #checked whether given user is admin or not. Since, only admin can add delete and update
         if request.user.is_superuser:
-            borrower_detail = BookBorrowed.objects.filter(id = pk).first()
+            borrower_detail = BookBorrowed.objects.filter(user_id = pk).first()
             if not borrower_detail:
                 return Response({"status": 400,"message":"Data doesn't exist"},status = status.HTTP_404_NOT_FOUND)
             borrower_detail.delete()
