@@ -56,6 +56,8 @@ User Endpoints
 Create user
 
 Endpoint: POST /api/users/
+
+
 Request Body: JSON with full_name, email,password and membership_date
 
 
@@ -70,6 +72,8 @@ Endpoint: GET /api/user_detail/{user_id}/
 Update user
 
 Endpoint: PUT /api/user_detail/{user_id}/
+
+
 Request Body: Same as create user
 
 Delete user
@@ -82,6 +86,9 @@ Books endpoint
 Add Book
 
 Endpoint: POST /api/books_list/
+
+
+
 Request Body: JSON with title, isbn, publishedDate and genre
 
 get all books
@@ -93,6 +100,9 @@ book detail endpoint
 Add bookdetail
 
 Endpoint: POST /api/booksdetail_list/
+
+
+
 Request Body: JSON with book_id, number_of_page, publisher, and language
 
 get all books detail
@@ -106,6 +116,8 @@ Endpoint: GET /api/bookdetail/{book_id}/
 update book detail by book id
 
 Endpoint: PUT /api/bookdetail/{book_id}/
+
+
 Request Body: Same as add book detail
 
 delete book detail by book id 
@@ -116,6 +128,8 @@ Book borrower
 Add book borrower
 
 Endpoint: POST /api/book_borrowers/
+
+
 Request Body: JSON with user_id, book_id, borrowed_date and returned_date where returned_date is not necessary if no data.
 
 get all list of borrowers
@@ -129,6 +143,8 @@ Endpoint: GET /api/borrower/{user_id}/
 update data of borrower by the id of user
 
 Endpoint: PUT /api/borrower/{user_id}/
+
+
 Request Body: Same as add book borrower
 
 delete data of the borrower by the id of user
@@ -138,6 +154,8 @@ Endpoint: DELETE /api/borrower/{user_id}/
 Endpoint for login
 
 Endpoint: POST /api/login/
+
+
 Request Body: JSON with email and password
 
 
