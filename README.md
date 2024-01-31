@@ -173,4 +173,6 @@ I have added login api to login the user. After logging in using the authorized 
 Also I have added permissions to only admin i.e superuser to add, delete and update the books detail , book borrower, or users. Also, only admin can see the list of user. Admin is created by command 
 python3 manage.py createsuperuser.
 
+I have used sqlite for the database.
+
 
