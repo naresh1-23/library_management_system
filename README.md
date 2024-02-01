@@ -158,6 +158,9 @@ Endpoint: POST /api/login/
 
 Request Body: JSON with email and password
 
+API Documentation endpoint
+
+Endpoint: GET /swagger/documentation/
 
 Additional Notes
 Before using api. You can first login using login api with superuser account. So that you can access the api which are not accessible for normal user.
@@ -172,6 +175,8 @@ I have added login api to login the user. After logging in using the authorized 
 
 Also I have added permissions to only admin i.e superuser to add, delete and update the books detail , book borrower, or users. Also, only admin can see the list of user. Admin is created by command 
 python3 manage.py createsuperuser.
+
+Since I have also used swagger for api documentation you can also go the the endpoint /swagger/documentation/ to see the all the api.
 
 I have used sqlite for the database.
 
